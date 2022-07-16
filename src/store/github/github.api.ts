@@ -1,26 +1,30 @@
-import { build } from '@reduxjs/toolkit/dist/query/core/buildMiddleware/cacheLifecycle'
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import { IUser, ServerResponse } from '../../models/models'
+import { build } from "@reduxjs/toolkit/dist/query/core/buildMiddleware/cacheLifecycle";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { IUser, ServerResponse } from "../../models/models";
 
 export const githubApi = createApi({
-    reducerPath: 'github/api',
-    baseQuery: fetchBaseQuery ({
-        baseUrl:'https://api.github.com/'
-    }),
-    endpoints: build => ({
-        searchUsers: build.query<IUser[], string>({
-            query: (search: string) => ({
-                url: `search/users`,
-                params: {
-                    q: search,
-                    per_page: 10
-                }
-            }),
-            transformResponse: (response: ServerResponse<IUser>) => response.items 
-                
-            
-        })
-    })
-})
+  reducerPath: "github/api",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://api.github.com/",
+  }),
 
-export const {useSearchUsersQuery} = githubApi
+  endpoints: (build) => ({
+    searchUsers: build.query<IUser[], string>({
+      query: (search: string) => ({
+        url: `search/users`,
+        params: {
+          q: search,
+          per_page: 10,
+        },
+      }),
+      transformResponse: (response: ServerResponse<IUser>) => response.items,
+    }),
+    getUserRepos: build.query<any, string>({
+      query: (username: string) => ({
+        url: `users/${username}/repos`,
+      }),
+    }),
+  }),
+});
+
+export const { useSearchUsersQuery, useLazyGetUserReposQuery } = githubApi;
