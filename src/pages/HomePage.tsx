@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { RepoCard } from "../components/RepoCard";
 import { useDebounce } from "../hooks/debounce";
 import {
   useLazyGetUserReposQuery,
@@ -23,6 +24,7 @@ export function HomePage() {
 
   const clickHandler = (username: string) => {
     fetchRepos(username);
+    setDropdown (false)
   };
 
   return (
@@ -60,7 +62,7 @@ export function HomePage() {
           )}
 
           {repos?.map((repo) => (
-            <p>{repo.url}</p>
+            <RepoCard repo={repo} key={repo.id} />
           ))}
         </div>
       </div>
