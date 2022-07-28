@@ -34,6 +34,7 @@ export function HomePage() {
       )}
 
       <div className="relative w-[560px]">
+        <h2 className="font-bold text-center mb-7">PLease enter GitHub username</h2>
         <input
           type="text"
           className="border py-2 px-4 w-full h-[42px] mb-2"
